@@ -1,0 +1,66 @@
+name: Discord Push Notification
+
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    env:
+      DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+      REPOSITORY: ${{ github.repository }}
+      BRANCH: ${{ github.ref_name }}
+      ACTOR: ${{ github.actor }}
+      EVENT_NAME: ${{ github.event_name }}
+      RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+      HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+      HEAD_COMMIT_URL: ${{ github.event.head_commit.url }}
+      COMMITS_JSON: ${{ toJson(github.event.commits) }}
+    steps:
+      - name: Send Discord notification
+        shell: bash
+        run: |
+          if [ -z "$DISCORD_WEBHOOK_URL" ]; then
+            echo "DISCORD_WEBHOOK_URL is not set. Skipping notification."
+            exit 0
+          fi
+
+          python - <<'PY'
+          import json
+          import os
+          import urllib.request
+
+          commits = json.loads(os.getenv("COMMITS_JSON", "[]") or "[]")
+          commit_count = len(commits)
+
+          head_commit_message = (os.getenv("HEAD_COMMIT_MESSAGE") or "No commit message").strip()
+          if len(head_commit_message) > 300:
+              head_commit_message = head_commit_message[:297] + "..."
+
+          commit_url = os.getenv("HEAD_COMMIT_URL") or os.getenv("RUN_URL")
+          repository = os.getenv("REPOSITORY")
+          branch = os.getenv("BRANCH")
+          actor = os.getenv("ACTOR")
+          event_name = os.getenv("EVENT_NAME")
+
+          content = (
+              f"[{repository}] {actor} pushed {commit_count} commit(s) to `{branch}`\n"
+              f"event: `{event_name}`\n"
+              f"head commit: {head_commit_message}\n"
+              f"{commit_url}"
+          )
+
+          payload = {"content": content}
+          request = urllib.request.Request(
+              os.environ["DISCORD_WEBHOOK_URL"],
+              data=json.dumps(payload).encode("utf-8"),
+              headers={"Content-Type": "application/json"},
+          )
+
+          with urllib.request.urlopen(request) as response:
+              print(f"Discord response: {response.status}")
+          PY

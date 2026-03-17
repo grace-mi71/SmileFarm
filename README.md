@@ -1,17 +1,17 @@
 # Smile Garden
 
-AR Smile Garden team project repository.
+웃음을 경험치로 바꾸고, 그 경험치로 AR 정원을 성장시키는 Android 기반 Unity 프로젝트입니다.
 
-## Overview
+## 프로젝트 개요
 
-- Project name: `Smile Garden`
-- Platform: `Android`
-- Engine: `Unity 6000.3.10f1`
-- Render pipeline: `URP`
-- AR stack: `AR Foundation` + `Google ARCore XR Plugin`
-- Core concept: detect the player's smile, convert it into experience, and grow an AR garden
+- 프로젝트명: `Smile Garden`
+- 플랫폼: `Android`
+- 엔진: `Unity 6000.3.10f1`
+- 렌더 파이프라인: `URP`
+- AR 스택: `AR Foundation` + `Google ARCore XR Plugin`
+- 핵심 컨셉: 플레이어의 웃음을 감지해 경험치를 얻고, 그 결과로 AR 정원을 성장시킨다
 
-## Repository Layout
+## 저장소 구조
 
 ```text
 SmileGarden/
@@ -19,127 +19,136 @@ SmileGarden/
   README.md
   .gitignore
   .gitattributes
+  .github/
+    workflows/
   docs/
   SmileFarm/
 ```
 
-- `docs/`: project decisions, runbook, tasks, and experiment notes
-- `SmileFarm/`: actual Unity project
+- `docs/`: 의사결정, 실행 절차, 작업 목록, 실험 기록
+- `SmileFarm/`: 실제 Unity 프로젝트
+- `.github/workflows/`: GitHub Actions 자동화
 
-## Docs
+## 문서
 
-- [AGENTS.md](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/AGENTS.md)
-- [docs/DECISIONS.md](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/docs/DECISIONS.md)
-- [docs/RUNBOOK.md](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/docs/RUNBOOK.md)
-- [docs/TASKS.md](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/docs/TASKS.md)
-- [docs/EXPERIMENTS.md](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/docs/EXPERIMENTS.md)
+- [AGENTS.md](./AGENTS.md)
+- [DECISIONS.md](./docs/DECISIONS.md)
+- [RUNBOOK.md](./docs/RUNBOOK.md)
+- [TASKS.md](./docs/TASKS.md)
+- [EXPERIMENTS.md](./docs/EXPERIMENTS.md)
 
-## Current Setup Status
+## 현재 세팅 상태
 
-The Unity project has been created and the initial AR project setup is in place.
+현재까지 완료된 기본 세팅은 아래와 같습니다.
 
-Completed:
-- Unity project created with `Universal 3D` template
-- Android target selected
-- Unity collaboration settings enabled
+- Unity 프로젝트 생성 완료
+  - 템플릿: `Universal 3D`
+- Android 타깃 전환 완료
+- 협업용 Unity 설정 완료
   - `Visible Meta Files`
   - `Force Text`
-- AR packages installed
+- AR 패키지 설치 완료
   - `com.unity.xr.management 4.5.4`
   - `com.unity.xr.arfoundation 6.3.3`
   - `com.unity.xr.arcore 6.3.3`
-- Base scenes created
+- 기본 씬 생성 완료
   - `MainScene`
   - `ARScene`
-- `ARScene` includes the basic AR components
+- `ARScene` 기본 AR 구성 완료
   - `AR Session`
   - `XR Origin (AR)`
   - `AR Camera Manager`
   - `AR Camera Background`
   - `AR Face Manager`
-- Unity Git rules added at repo root
-  - [`.gitignore`](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/.gitignore)
-  - [`.gitattributes`](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/.gitattributes)
+- Unity 협업용 Git 설정 추가 완료
+  - `.gitignore`
+  - `.gitattributes`
 
-## Smile Detection Work
+## 현재 구현된 앞 파이프라인
 
-Current smile-recognition code skeleton:
-- [SmileDetection.cs](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/Assets/Scripts/Smile/SmileDetection.cs)
-- [SmileScorer.cs](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/Assets/Scripts/Smile/SmileScorer.cs)
-- [SmileSample.cs](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/Assets/Scripts/Smile/SmileSample.cs)
-- [GameManager.cs](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/Assets/Scripts/Core/GameManager.cs)
-- [GardenGrowth.cs](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/Assets/Scripts/Garden/GardenGrowth.cs)
-- [UIManager.cs](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/Assets/Scripts/UI/UIManager.cs)
-
-Current responsibilities:
-- `SmileDetection.cs`
-  Receives AR face-tracking context and exposes normalized smile state
-- `SmileScorer.cs`
-  Contains the score calculation entry point
-- `SmileSample.cs`
-  Wraps score, percent, and threshold-based smile checks
-
-Current public output standard:
-- `SmileScore`: `0.0f ~ 1.0f`
-- `SmilePercent`: `0 ~ 100`
-- `IsSmiling`: threshold-based boolean
-
-Note:
-- Real Android smile scoring is not fully connected yet
-- The current implementation includes an editor debug path so the score flow can be tested before device tuning
-
-## Current Front Pipeline
-
-The current editor-testable loop is:
+실기기 없이도 Unity Editor에서 테스트 가능한 최소 흐름은 만들어진 상태입니다.
 
 ```text
 ARScene
 -> SmileDetection
 -> GameManager
 -> GardenGrowth
--> UIManager debug overlay
+-> UIManager Debug Overlay
 ```
 
-What this currently means:
-- `SmileDetection` outputs smile score, percent, and threshold state
-- `GameManager` waits for the smile state to be held for a fixed time
-- `GardenGrowth` receives experience and updates the current stage
-- `UIManager` draws a simple debug overlay in play mode
+현재 가능한 것:
+- `SmileDetection`이 웃음 점수와 상태를 출력
+- `GameManager`가 웃음 유지 시간을 누적
+- `GardenGrowth`가 경험치와 성장 단계를 관리
+- `UIManager`가 디버그 정보를 화면에 표시
+- `debugScore`를 이용해 에디터에서 흐름 검증 가능
 
-This lets the team test the game loop in the Unity Editor using `debugScore` even before an Android device is available.
+현재 아직 안 된 것:
+- Android 실기기에서 실제 얼굴 추적 확인
+- 실제 얼굴 데이터 기반 `SmileScore` 계산
+- 실기기 기준 웃음 threshold 튜닝
 
-## Important Paths
+## 주요 스크립트
 
-- Unity project: [SmileFarm](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm)
-- Scenes: [Assets/Scenes](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/Assets/Scenes)
-- Smile scripts: [Assets/Scripts/Smile](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/Assets/Scripts/Smile)
-- Project settings: [ProjectSettings](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/ProjectSettings)
-- Package manifest: [Packages/manifest.json](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/SmileFarm/Packages/manifest.json)
+- `SmileFarm/Assets/Scripts/Smile/SmileDetection.cs`
+- `SmileFarm/Assets/Scripts/Smile/SmileScorer.cs`
+- `SmileFarm/Assets/Scripts/Smile/SmileSample.cs`
+- `SmileFarm/Assets/Scripts/Core/GameManager.cs`
+- `SmileFarm/Assets/Scripts/Garden/GardenGrowth.cs`
+- `SmileFarm/Assets/Scripts/UI/UIManager.cs`
 
-## What To Commit
+## 현재 디버그 출력 규격
 
-Commit:
+- `SmileScore`: `0.0f ~ 1.0f`
+- `SmilePercent`: `0 ~ 100`
+- `IsSmiling`: threshold 기반 `bool`
+- `HasTrackedFace`: 실제 얼굴 추적 여부
+
+## 커밋할 파일
+
+커밋 대상:
 - `docs/`
 - `SmileFarm/Assets/`
 - `SmileFarm/Packages/`
 - `SmileFarm/ProjectSettings/`
+- `.github/workflows/`
 - `.gitignore`
 - `.gitattributes`
 - `README.md`
 
-Do not commit:
+커밋 제외:
 - `SmileFarm/Library/`
 - `SmileFarm/Temp/`
 - `SmileFarm/Logs/`
 - `SmileFarm/UserSettings/`
-- generated IDE files
+- IDE 생성 파일
 
-## Next Steps
+## Discord 알림 설정
 
-1. Attach `SmileDetection` to the face-tracking object in `ARScene`
-2. Create one empty object such as `Managers` in `ARScene`
-3. Attach `GameManager`, `GardenGrowth`, and `UIManager` to that object
-4. Connect `ARFaceManager` reference in the Inspector
-5. Build to an actual Android device
-6. Start recording smile-detection experiments in [docs/EXPERIMENTS.md](C:/Users/MIN/Desktop/2026_1/IMP/SmileGarden/docs/EXPERIMENTS.md)
-7. Replace placeholder score inputs with real AR face metrics
+현재 저장소에는 push 알림을 Discord로 보내는 GitHub Actions 워크플로우가 포함되어 있습니다.
+
+워크플로우 파일:
+- [discord-push-notify.yml](./.github/workflows/discord-push-notify.yml)
+
+동작 방식:
+- GitHub에 `push`가 발생하면 실행
+- 저장소 secret에 등록된 Discord webhook으로 메시지 전송
+- webhook이 없으면 워크플로우는 조용히 종료
+
+설정 방법:
+1. Discord 채널 설정에서 `Webhook` 생성
+2. GitHub 저장소에서 `Settings > Secrets and variables > Actions` 이동
+3. `New repository secret` 클릭
+4. 이름을 `DISCORD_WEBHOOK_URL`로 설정
+5. 값에 Discord webhook URL 입력
+6. 이후 `git push` 시 Discord 알림 확인
+
+## 다음 우선순위
+
+현재 가장 중요한 다음 단계는 아래입니다.
+
+1. Android 실기기에서 얼굴 추적이 실제로 잡히는지 확인
+2. 얼굴 데이터가 들어오는지 확인
+3. 그 데이터를 이용해 웃음 점수 계산 로직 연결
+4. 실험 결과를 [EXPERIMENTS.md](./docs/EXPERIMENTS.md)에 기록
+
