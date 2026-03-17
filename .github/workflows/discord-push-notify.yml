@@ -21,7 +21,7 @@ jobs:
       HEAD_COMMIT_URL: ${{ github.event.head_commit.url }}
       COMMITS_JSON: ${{ toJson(github.event.commits) }}
     steps:
-      - name: Send Discord notification
+      - name: Validate webhook secret
         shell: bash
         run: |
           if [ -z "$DISCORD_WEBHOOK_URL" ]; then
@@ -29,10 +29,15 @@ jobs:
             exit 0
           fi
 
-          python - <<'PY'
+      - name: Send Discord notification
+        shell: bash
+        run: |
+          python3 - <<'PY'
           import json
           import os
+          import sys
           import urllib.request
+          import urllib.error
 
           commits = json.loads(os.getenv("COMMITS_JSON", "[]") or "[]")
           commit_count = len(commits)
@@ -61,6 +66,15 @@ jobs:
               headers={"Content-Type": "application/json"},
           )
 
-          with urllib.request.urlopen(request) as response:
-              print(f"Discord response: {response.status}")
+          try:
+              with urllib.request.urlopen(request) as response:
+                  print(f"Discord response: {response.status}")
+          except urllib.error.HTTPError as error:
+              body = error.read().decode("utf-8", errors="replace")
+              print(f"Discord webhook failed with HTTP {error.code}")
+              print(body)
+              sys.exit(1)
+          except Exception as error:
+              print(f"Unexpected Discord notification error: {error}")
+              sys.exit(1)
           PY
