@@ -31,6 +31,8 @@ namespace SmileFarm.Smile
 
         public bool HasTrackedFace => FindTrackedFace();
 
+        public bool HasSmileInput => HasTrackedFace || (useDebugScoreInEditor && Application.isEditor);
+
         public event Action<float> ScoreChanged;
 
         public event Action<bool> SmileStateChanged;
@@ -88,7 +90,9 @@ namespace SmileFarm.Smile
 
         public string GetDebugLabel()
         {
-            var trackingLabel = HasTrackedFace ? "Tracked" : "Missing";
+            var trackingLabel = HasTrackedFace
+                ? "Tracked"
+                : (useDebugScoreInEditor && Application.isEditor ? "Debug" : "Missing");
             return $"Face: {trackingLabel} | Smile: {CurrentPercent}%";
         }
 

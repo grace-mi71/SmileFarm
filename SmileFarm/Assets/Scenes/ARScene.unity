@@ -327,8 +327,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4966719baa26e4b0e8231a24d9bd491a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.XR.ARFoundation::UnityEngine.XR.ARFoundation.ARCameraManager
-  m_FocusMode: 1
-  m_LightEstimationMode: 0
+  m_FocusMode: -1
+  m_LightEstimationMode: -1
   m_AutoFocus: 1
   m_ImageStabilization: 0
   m_LightEstimation: 0
@@ -393,6 +393,89 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &1535222391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1535222395}
+  - component: {fileID: 1535222394}
+  - component: {fileID: 1535222393}
+  - component: {fileID: 1535222392}
+  m_Layer: 0
+  m_Name: Managers
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1535222392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535222391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 347abbab69f76194f92183a35b151437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SmileFarm.UI.UIManager
+  smileDetection: {fileID: 2112481208}
+  gameManager: {fileID: 1535222394}
+  gardenGrowth: {fileID: 1535222393}
+  showDebugOverlay: 1
+  startPosition: {x: 16, y: 16}
+  labelSize: {x: 520, y: 24}
+  lineSpacing: 28
+--- !u!114 &1535222393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535222391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dff4d2db888a61b4a89b0bd394d2d9b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SmileFarm.Garden.GardenGrowth
+  stageThresholds: 0000000014000000320000005a000000
+--- !u!114 &1535222394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535222391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7e7f0ff063e46e4984f425b15ae4f2c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SmileFarm.Core.GameManager
+  smileDetection: {fileID: 2112481208}
+  gardenGrowth: {fileID: 1535222393}
+  requiredSmileHoldSeconds: 2
+  rewardExperience: 10
+  holdResetSpeed: 2
+--- !u!4 &1535222395
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1535222391}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1741284494
 GameObject:
   m_ObjectHideFlags: 0
@@ -623,6 +706,7 @@ GameObject:
   - component: {fileID: 2112481207}
   - component: {fileID: 2112481206}
   - component: {fileID: 2112481205}
+  - component: {fileID: 2112481208}
   m_Layer: 0
   m_Name: XR Origin
   m_TagString: Untagged
@@ -680,6 +764,23 @@ Transform:
   - {fileID: 2046472115}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2112481208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2112481204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd43b267dd6d33f40a061fe0a886e437, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SmileFarm.Smile.SmileDetection
+  faceManager: {fileID: 2112481205}
+  smileThreshold: 0.6
+  smoothingSpeed: 8
+  useDebugScoreInEditor: 1
+  debugScore: 0.8
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -687,3 +788,4 @@ SceneRoots:
   - {fileID: 1741284496}
   - {fileID: 1831496718}
   - {fileID: 2112481207}
+  - {fileID: 1535222395}
