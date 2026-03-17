@@ -1,0 +1,22 @@
+# Unity project artifacts
+/SmileFarm/[Ll]ibrary/
+/SmileFarm/[Tt]emp/
+/SmileFarm/[Oo]bj/
+/SmileFarm/[Bb]uild/
+/SmileFarm/[Bb]uilds/
+/SmileFarm/[Ll]ogs/
+/SmileFarm/[Uu]ser[Ss]ettings/
+/SmileFarm/MemoryCaptures/
+/SmileFarm/Recordings/
+
+# IDE and generated solution files
+/SmileFarm/.vs/
+/SmileFarm/.vscode/
+/SmileFarm/*.csproj
+/SmileFarm/*.sln
+/SmileFarm/*.slnx
+
+# OS files
+Thumbs.db
+Desktop.ini
+
