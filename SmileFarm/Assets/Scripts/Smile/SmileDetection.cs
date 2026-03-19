@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 namespace SmileFarm.Smile
 {
@@ -38,6 +39,7 @@ namespace SmileFarm.Smile
         public event Action<bool> SmileStateChanged;
 
         private bool lastSmileState;
+        private SmileMetrics lastMetrics;
 
         private void Reset()
         {
@@ -64,9 +66,7 @@ namespace SmileFarm.Smile
             }
             else if (HasTrackedFace)
             {
-                // Real landmark-to-score mapping will be connected here once
-                // we decide which AR face metrics are stable enough on device.
-                targetScore = 0f;
+                targetScore = EstimateSmileScoreFromFace();
             }
 
             UpdateScore(targetScore);
@@ -96,6 +96,22 @@ namespace SmileFarm.Smile
             return $"Face: {trackingLabel} | Smile: {CurrentPercent}%";
         }
 
+        public string GetMetricsDebugLabel()
+        {
+            return
+                $"Metrics: width {lastMetrics.MouthWidthRatio:0.00} | " +
+                $"open {lastMetrics.MouthOpenRatio:0.00} | " +
+                $"lift {lastMetrics.CornerLiftRatio:0.00}";
+        }
+
+        public string GetRawMetricsDebugLabel()
+        {
+            return
+                $"Raw: width {lastMetrics.RawMouthWidth:0.000} | " +
+                $"open {lastMetrics.RawMouthOpen:0.000} | " +
+                $"lift {lastMetrics.RawCornerLift:0.000}";
+        }
+
         private bool FindTrackedFace()
         {
             if (faceManager == null)
@@ -109,6 +125,44 @@ namespace SmileFarm.Smile
             }
 
             return false;
+        }
+
+        private float EstimateSmileScoreFromFace()
+        {
+            var face = GetTrackedFace();
+            if (face == null)
+            {
+                lastMetrics = default;
+                return 0f;
+            }
+
+            if (!SmileFaceMeshEstimator.TryEstimate(face, out lastMetrics))
+            {
+                return 0f;
+            }
+
+            return SmileScorer.CalculateScore(
+                lastMetrics.MouthWidthRatio,
+                lastMetrics.MouthOpenRatio,
+                lastMetrics.CornerLiftRatio);
+        }
+
+        private ARFace GetTrackedFace()
+        {
+            if (faceManager == null)
+            {
+                return null;
+            }
+
+            foreach (var trackedFace in faceManager.trackables)
+            {
+                if (trackedFace.trackingState == TrackingState.Tracking)
+                {
+                    return trackedFace;
+                }
+            }
+
+            return null;
         }
 
         private void UpdateScore(float targetScore)

@@ -70,6 +70,15 @@ namespace SmileFarm.UI
             DrawLabel(x, y, smileState);
             y += lineSpacing;
 
+            if (smileDetection != null)
+            {
+                DrawLabel(x, y, smileDetection.GetMetricsDebugLabel());
+                y += lineSpacing;
+
+                DrawLabel(x, y, smileDetection.GetRawMetricsDebugLabel());
+                y += lineSpacing;
+            }
+
             DrawLabel(x, y, gameManager != null ? gameManager.GetDebugLabel() : "Smile Loop: GameManager missing");
             y += lineSpacing;
 
