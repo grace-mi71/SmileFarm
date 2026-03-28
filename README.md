@@ -95,7 +95,29 @@ ARScene
 - `SmileFarm/Assets/Scripts/Smile/SmileSample.cs`
 - `SmileFarm/Assets/Scripts/Core/GameManager.cs`
 - `SmileFarm/Assets/Scripts/Garden/GardenGrowth.cs`
+- `SmileFarm/Assets/Scripts/Garden/FaceFlowerAnchor.cs`
+- `SmileFarm/Assets/Scripts/Garden/FaceFlowerStageView.cs`
 - `SmileFarm/Assets/Scripts/UI/UIManager.cs`
+
+## 얼굴 꽃 연출
+
+경험치 누적에 따른 4단계 성장을 얼굴 이마 위 꽃 개수로 보여주는 구조를 추가했습니다.
+
+- 1단계: 꽃 1개
+- 2단계: 꽃 2개
+- 3단계: 꽃 3개
+- 4단계: 꽃 4개
+
+구성 방식:
+- `FaceFlowerAnchor`
+  추적된 얼굴 transform 기준으로 이마 위치를 따라가는 anchor
+- `FaceFlowerStageView`
+  현재 성장 단계에 맞춰 꽃 슬롯 4개 중 필요한 개수만 활성화
+
+현재 권장 구현 방식:
+- 꽃 4개를 하나의 얼굴 장식 오브젝트 아래에 미리 배치
+- 각 슬롯을 Inspector에 연결
+- 실기기에서 이마 위치 offset을 미세 조정
 
 ## 현재 디버그 출력 규격
 
@@ -151,4 +173,3 @@ ARScene
 2. 얼굴 데이터가 들어오는지 확인
 3. 그 데이터를 이용해 웃음 점수 계산 로직 연결
 4. 실험 결과를 [EXPERIMENTS.md](./docs/EXPERIMENTS.md)에 기록
-
