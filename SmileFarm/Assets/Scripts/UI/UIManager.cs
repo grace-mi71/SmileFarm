@@ -2,6 +2,7 @@ using SmileFarm.Core;
 using SmileFarm.Garden;
 using SmileFarm.Smile;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SmileFarm.UI
 {
@@ -18,6 +19,13 @@ namespace SmileFarm.UI
         [SerializeField] private Vector2 startPosition = new(16f, 16f);
         [SerializeField] private Vector2 labelSize = new(520f, 24f);
         [SerializeField] private float lineSpacing = 28f;
+
+        // MainMenu Btn
+        [Header("MainMenu Button")]
+        [SerializeField] private Button FlowerButton;
+        [SerializeField] private Button FlowerShop;
+        [SerializeField] private Button FlowerButtonNothing;
+        [SerializeField] private Button PlayGame;
 
         private GUIStyle labelStyle;
 
