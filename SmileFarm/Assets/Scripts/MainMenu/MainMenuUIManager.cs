@@ -4,33 +4,33 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUIManager : MonoBehaviour
 {
-    [SerializeField] private Button BtnA;
-    [SerializeField] private Button BtnB;
-    [SerializeField] private Button BtnC;
-    [SerializeField] private Button BtnD;
+    [SerializeField] private Button ProfileBtn;
+    [SerializeField] private Button ShopBtn;
+    [SerializeField] private Button ARBtn;
+    [SerializeField] private Button SettingBtn;
 
-    private bool isFlowerOpen = false;  //
+    private bool isProfileOpen = false;  //
     private bool isShopOpen = false;    //
 
-    private bool isUIOpen = false;      //UI 열림 여부
+    //private bool isUIOpen = false;      //UI 열림 여부
 
     void Start()
     {
-        BtnA.onClick.AddListener(OnFlowerClicked);
-        BtnA.onClick.AddListener(OnShopClicked);
-        BtnA.onClick.AddListener(OnClicked);
-        BtnA.onClick.AddListener(OnGamePlayCliked);
+        ProfileBtn.onClick.AddListener(OnProfileBtnClicked);
+        ShopBtn.onClick.AddListener(OnShopBtnClicked);
+        ARBtn.onClick.AddListener(OnARBtnClicked);
+        SettingBtn.onClick.AddListener(OnSettingBtnClicked);
     }
 
-    private void OnFlowerClicked()
+    private void OnProfileBtnClicked()
     {
-        if (isFlowerOpen = !isFlowerOpen)
+        if (isProfileOpen = !isProfileOpen)
         {
 
         }
     }
 
-    private void OnShopClicked()
+    private void OnShopBtnClicked()
     {
         if (isShopOpen = !isShopOpen)
         {
@@ -38,14 +38,14 @@ public class MainMenuUIManager : MonoBehaviour
         }
     }
 
-    private void OnClicked()
-    {
-        //
-    }
-
-    private void OnGamePlayCliked()
+    private void OnARBtnClicked()
     {
         LoadScene(2);
+    }
+
+    private void OnSettingBtnClicked()
+    {
+        
     }
 
     public void LoadScene(int SceneNumber)

@@ -4,13 +4,13 @@ using UnityEngine.SceneManagement;
 
 public class TitleUIManager : MonoBehaviour
 {
-    [SerializeField] private Button mainMenuButton;
-    [SerializeField] private Button exitButton;
+    [SerializeField] private Button gameStartBtn;
+    [SerializeField] private Button exitBtn;
 
     void Start()
     {
-        mainMenuButton.onClick.AddListener(OnMainMenuClicked);
-        exitButton.onClick.AddListener(OnExitClicked);
+        gameStartBtn.onClick.AddListener(OnMainMenuClicked);
+        exitBtn.onClick.AddListener(OnExitClicked);
     }
 
     private void OnMainMenuClicked()
