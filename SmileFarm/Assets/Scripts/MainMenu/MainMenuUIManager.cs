@@ -9,6 +9,9 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] private Button ARBtn;
     [SerializeField] private Button SettingBtn;
 
+    // 게임 테스트용
+    [SerializeField] private PlayerManager playerManager;
+
     private bool isProfileOpen = false;  //
     private bool isShopOpen = false;    //
 
@@ -45,7 +48,9 @@ public class MainMenuUIManager : MonoBehaviour
 
     private void OnSettingBtnClicked()
     {
-        
+         // 테스트용 경험치 지급 (원하는 값으로 조정)
+        if (playerManager != null)
+            playerManager.ExpReward(20);
     }
 
     public void LoadScene(int SceneNumber)
