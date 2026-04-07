@@ -870,8 +870,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76ed83344e31b7e4784e870bd33d7767, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleUIManager
-  mainMenuButton: {fileID: 1939319402}
-  exitButton: {fileID: 2146382363}
+  gameStartBtn: {fileID: 1939319402}
+  exitBtn: {fileID: 2146382363}
 --- !u!4 &1804343770
 Transform:
   m_ObjectHideFlags: 0

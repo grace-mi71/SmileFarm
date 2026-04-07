@@ -19,6 +19,17 @@ public class PlayerManager : MonoBehaviour
     // 현재 레벨업에 필요한 요구 경험치
     public float RequiredEXP => Mathf.Round(FirstRequiredEXP * Mathf.Pow(expScale, PlayerLevel));
 
+    private void Start()
+    {
+        var pendingSmileExp = SmileSessionTransfer.ConsumePendingSmileExperience();
+        if (pendingSmileExp <= 0)
+        {
+            return;
+        }
+
+        ExpReward(pendingSmileExp);
+    }
+
     public void ExpReward(int amount)
     {
         // SmileEXP 누적

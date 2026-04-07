@@ -32,6 +32,12 @@ namespace SmileFarm.UI
         [SerializeField] private string completeSceneName = "MainScene";
         [SerializeField] private float completeSceneDelay = 1.2f;
 
+        [Header("Smile Session Timer")]
+        [SerializeField] private bool useSmileSessionTimer = true;
+        [Min(1f)]
+        [SerializeField] private float sessionDurationSeconds = 20f;
+        [SerializeField] private bool transferExperienceToMainMenu = true;
+
         // MainMenu Btn
         [Header("MainMenu Button")]
         [SerializeField] private Button FlowerButton;
@@ -41,6 +47,7 @@ namespace SmileFarm.UI
 
         private GUIStyle labelStyle;
         private bool isLoadingCompleteScene;
+        private float remainingSessionSeconds;
 
         private void Reset()
         {
@@ -66,6 +73,7 @@ namespace SmileFarm.UI
                 gardenGrowth = FindFirstObjectByType<GardenGrowth>();
             }
 
+            remainingSessionSeconds = Mathf.Max(1f, sessionDurationSeconds);
             RefreshGauge();
         }
 
@@ -91,6 +99,22 @@ namespace SmileFarm.UI
         {
             RefreshGauge();
             TryLoadCompleteScene();
+        }
+
+        private void Update()
+        {
+            if (!useSmileSessionTimer || isLoadingCompleteScene)
+            {
+                return;
+            }
+
+            remainingSessionSeconds = Mathf.Max(0f, remainingSessionSeconds - Time.deltaTime);
+            if (remainingSessionSeconds > 0f)
+            {
+                return;
+            }
+
+            BeginCompleteSceneTransition();
         }
 
         private void OnGUI()
@@ -128,6 +152,12 @@ namespace SmileFarm.UI
 
             DrawLabel(x, y, gameManager != null ? gameManager.GetDebugLabel() : "Smile Loop: GameManager missing");
             y += lineSpacing;
+
+            if (useSmileSessionTimer)
+            {
+                DrawLabel(x, y, $"Session Time: {remainingSessionSeconds:0.0}s / {sessionDurationSeconds:0.0}s");
+                y += lineSpacing;
+            }
 
             if (gardenGrowth != null)
             {
@@ -208,7 +238,23 @@ namespace SmileFarm.UI
                 return;
             }
 
+            BeginCompleteSceneTransition();
+        }
+
+        private void BeginCompleteSceneTransition()
+        {
+            if (isLoadingCompleteScene)
+            {
+                return;
+            }
+
             isLoadingCompleteScene = true;
+
+            if (transferExperienceToMainMenu && gardenGrowth != null)
+            {
+                SmileSessionTransfer.StorePendingSmileExperience(gardenGrowth.CurrentExperience);
+            }
+
             StartCoroutine(LoadCompleteSceneAfterDelay());
         }
 
