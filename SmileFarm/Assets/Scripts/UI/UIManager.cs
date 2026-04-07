@@ -1,7 +1,9 @@
 using SmileFarm.Core;
 using SmileFarm.Garden;
 using SmileFarm.Smile;
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace SmileFarm.UI
@@ -20,6 +22,16 @@ namespace SmileFarm.UI
         [SerializeField] private Vector2 labelSize = new(520f, 24f);
         [SerializeField] private float lineSpacing = 28f;
 
+        [Header("Growth Gauge")]
+        [SerializeField] private Image[] gaugeSegments = new Image[4];
+        [SerializeField] private Color emptyGaugeColor = new(0.15f, 0.15f, 0.15f, 0.85f);
+        [SerializeField] private Color filledGaugeColor = new(0.2f, 0.85f, 0.35f, 1f);
+
+        [Header("Scene Transition")]
+        [SerializeField] private bool autoLoadMainSceneOnComplete = true;
+        [SerializeField] private string completeSceneName = "MainScene";
+        [SerializeField] private float completeSceneDelay = 1.2f;
+
         // MainMenu Btn
         [Header("MainMenu Button")]
         [SerializeField] private Button FlowerButton;
@@ -28,6 +40,7 @@ namespace SmileFarm.UI
         [SerializeField] private Button PlayGame;
 
         private GUIStyle labelStyle;
+        private bool isLoadingCompleteScene;
 
         private void Reset()
         {
@@ -52,6 +65,32 @@ namespace SmileFarm.UI
             {
                 gardenGrowth = FindFirstObjectByType<GardenGrowth>();
             }
+
+            RefreshGauge();
+        }
+
+        private void OnEnable()
+        {
+            if (gardenGrowth != null)
+            {
+                gardenGrowth.ExperienceChanged += HandleExperienceChanged;
+                gardenGrowth.StageChanged += HandleStageChanged;
+            }
+        }
+
+        private void OnDisable()
+        {
+            if (gardenGrowth != null)
+            {
+                gardenGrowth.ExperienceChanged -= HandleExperienceChanged;
+                gardenGrowth.StageChanged -= HandleStageChanged;
+            }
+        }
+
+        private void Start()
+        {
+            RefreshGauge();
+            TryLoadCompleteScene();
         }
 
         private void OnGUI()
@@ -103,6 +142,18 @@ namespace SmileFarm.UI
             }
         }
 
+        private void HandleExperienceChanged(int _)
+        {
+            RefreshGauge();
+            TryLoadCompleteScene();
+        }
+
+        private void HandleStageChanged(int _)
+        {
+            RefreshGauge();
+            TryLoadCompleteScene();
+        }
+
         private void EnsureStyle()
         {
             if (labelStyle != null)
@@ -120,6 +171,51 @@ namespace SmileFarm.UI
         private void DrawLabel(float x, float y, string text)
         {
             GUI.Label(new Rect(x, y, labelSize.x, labelSize.y), text, labelStyle);
+        }
+
+        private void RefreshGauge()
+        {
+            if (gardenGrowth == null)
+            {
+                return;
+            }
+
+            for (var i = 0; i < gaugeSegments.Length; i++)
+            {
+                var segment = gaugeSegments[i];
+                if (segment == null)
+                {
+                    continue;
+                }
+
+                segment.type = Image.Type.Filled;
+                segment.fillMethod = Image.FillMethod.Horizontal;
+                segment.fillOrigin = (int)Image.OriginHorizontal.Left;
+                segment.fillAmount = gardenGrowth.GetSegmentFillAmount(i, gaugeSegments.Length);
+                segment.color = Color.Lerp(emptyGaugeColor, filledGaugeColor, segment.fillAmount);
+            }
+        }
+
+        private void TryLoadCompleteScene()
+        {
+            if (!autoLoadMainSceneOnComplete || isLoadingCompleteScene || gardenGrowth == null)
+            {
+                return;
+            }
+
+            if (!gardenGrowth.IsComplete)
+            {
+                return;
+            }
+
+            isLoadingCompleteScene = true;
+            StartCoroutine(LoadCompleteSceneAfterDelay());
+        }
+
+        private IEnumerator LoadCompleteSceneAfterDelay()
+        {
+            yield return new WaitForSeconds(completeSceneDelay);
+            SceneManager.LoadScene(completeSceneName);
         }
     }
 }

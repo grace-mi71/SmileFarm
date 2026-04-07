@@ -15,6 +15,8 @@ namespace SmileFarm.Garden
 
         public int MaxStageIndex => Mathf.Max(0, stageThresholds.Length - 1);
 
+        public bool IsComplete => CurrentExperience >= stageThresholds[MaxStageIndex];
+
         public event Action<int> ExperienceChanged;
 
         public event Action<int> StageChanged;
@@ -63,6 +65,28 @@ namespace SmileFarm.Garden
             return stageThresholds[nextStageIndex];
         }
 
+        public float GetSegmentFillAmount(int segmentIndex, int totalSegments)
+        {
+            if (segmentIndex < 0 || totalSegments <= 0 || segmentIndex >= totalSegments)
+            {
+                return 0f;
+            }
+
+            var scaledProgress = GetOverallProgress01() * totalSegments;
+            return Mathf.Clamp01(scaledProgress - segmentIndex);
+        }
+
+        public float GetOverallProgress01()
+        {
+            var finalRequirement = stageThresholds[MaxStageIndex];
+            if (finalRequirement <= 0)
+            {
+                return 1f;
+            }
+
+            return Mathf.Clamp01(CurrentExperience / (float)finalRequirement);
+        }
+
         public string GetDebugLabel()
         {
             return $"Garden: Stage {CurrentStageIndex + 1}/{MaxStageIndex + 1} | XP {CurrentExperience}";
@@ -84,4 +108,3 @@ namespace SmileFarm.Garden
         }
     }
 }
-
