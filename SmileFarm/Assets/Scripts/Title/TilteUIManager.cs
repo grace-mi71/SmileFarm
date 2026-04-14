@@ -15,11 +15,15 @@ public class TitleUIManager : MonoBehaviour
 
     private void OnMainMenuClicked()
     {
+        if (SoundManager.Instance != null) SoundManager.Instance.PlayButtonClick();
+
         LoadScene(1);
     }
 
     private void OnExitClicked()
     {
+        if (SoundManager.Instance != null) SoundManager.Instance.PlayButtonClick();
+
         Application.Quit();
     }
 

@@ -10,12 +10,14 @@ public class SoundManager : MonoBehaviour
     public AudioSource bgmSource;
     public AudioSource sfxSource;
 
+    public AudioClip defaultClickSound;
+
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // it will persist across scenes
+            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -25,6 +27,7 @@ public class SoundManager : MonoBehaviour
 
     public void PlayBGM(AudioClip clip)
     {
+        if (bgmSource.clip == clip) return; 
         bgmSource.clip = clip;
         bgmSource.Play();
     }
@@ -32,6 +35,14 @@ public class SoundManager : MonoBehaviour
     public void PlaySFX(AudioClip clip)
     {
         sfxSource.PlayOneShot(clip);
+    }
+
+    public void PlayButtonClick()
+    {
+        if (defaultClickSound != null)
+        {
+            PlaySFX(defaultClickSound);
+        }
     }
 
     public void SetBGMVolume(float volume)
