@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class PlayerManager : MonoBehaviour
 
     [Header("Level Objects")]
     [SerializeField] private GameObject[] levelObjects;         // 레벨별 활성화 오브젝트 (10개)
+
+    public event Action<int> LevelChanged;
 
     // 현재 레벨업에 필요한 요구 경험치
     public float RequiredEXP => Mathf.Round(FirstRequiredEXP * Mathf.Pow(expScale, PlayerLevel));
@@ -52,6 +55,8 @@ public class PlayerManager : MonoBehaviour
             PlayerLevel++;
 
             ActiveLevelObject(PlayerLevel);
+
+            LevelChanged?.Invoke(PlayerLevel);
         }
     }
 
