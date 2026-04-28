@@ -266,6 +266,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &93602467 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5396741594399826207, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -286,6 +287,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &100460166 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9044197929040499457, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -306,6 +308,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &129495467
 GameObject:
   m_ObjectHideFlags: 0
@@ -401,6 +404,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &215301250 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2878562695310523784, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -547,6 +551,7 @@ MonoBehaviour:
   animType: 1
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &258610996 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1379335839740636947, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -567,6 +572,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &295972714 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 15959340006484016, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -587,6 +593,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &313142381
 GameObject:
   m_ObjectHideFlags: 0
@@ -757,6 +764,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &417013580
 GameObject:
   m_ObjectHideFlags: 0
@@ -994,6 +1002,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &586789063 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3056872996720456655, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1014,6 +1023,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &603724218 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1190330181540887278, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1034,6 +1044,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &607754523
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,6 +1140,7 @@ MonoBehaviour:
   animType: 2
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &614691327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,6 +1236,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &633391802 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7912559443421233814, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1391,6 +1404,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &683827021 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3388430252604559034, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1411,6 +1425,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &700755607 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 197617290418774934, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1431,6 +1446,7 @@ MonoBehaviour:
   animType: 2
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &742727512 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 926619063841138227, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1451,6 +1467,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &776005342 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3164296820993007381, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1471,6 +1488,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &778658380 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8234502072037164124, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1491,6 +1509,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &792767187 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2098660782647935397, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1511,6 +1530,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &799987509
 GameObject:
   m_ObjectHideFlags: 0
@@ -1781,6 +1801,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &893975478 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3228807375966264092, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -1801,6 +1822,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &935611804
 GameObject:
   m_ObjectHideFlags: 0
@@ -1971,6 +1993,7 @@ MonoBehaviour:
   animType: 1
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1015669063
 GameObject:
   m_ObjectHideFlags: 0
@@ -2118,6 +2141,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1056384226
 GameObject:
   m_ObjectHideFlags: 0
@@ -2259,6 +2283,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1084423734
 GameObject:
   m_ObjectHideFlags: 0
@@ -2692,6 +2717,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1212694453 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3376018731240370995, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -2850,6 +2876,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1283646614
 GameObject:
   m_ObjectHideFlags: 0
@@ -2945,6 +2972,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1359129469 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3501270148999394659, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -3107,6 +3135,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1409651365
 GameObject:
   m_ObjectHideFlags: 0
@@ -3327,6 +3356,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1418280932
 GameObject:
   m_ObjectHideFlags: 0
@@ -3468,6 +3498,7 @@ MonoBehaviour:
   animType: 1
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1439723934
 GameObject:
   m_ObjectHideFlags: 0
@@ -3869,6 +3900,7 @@ MonoBehaviour:
   animType: 2
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1558711641
 GameObject:
   m_ObjectHideFlags: 0
@@ -3964,6 +3996,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1609032473 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3375412095832057304, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -3984,6 +4017,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1001 &1646184765
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4065,6 +4099,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1766530228 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8332279338598619494, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -4085,6 +4120,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1782874749 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1033413212983410318, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -4105,6 +4141,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1789344044 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7700210387538987862, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -4125,6 +4162,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1790202559 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4817356193883856944, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -4145,6 +4183,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1811852650 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4038654346414745762, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -4319,6 +4358,27 @@ MonoBehaviour:
   birdSound: {fileID: 8300000, guid: 1b66a1e3dd614e8459ef5b08f0a81dff, type: 3}
   birdStages: 03000000
   soundDelay: 0.5
+--- !u!1 &1857286991 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1375608868896104209, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
+  m_PrefabInstance: {fileID: 1958651868}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1857286993
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1857286991}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7696ade48d43d2438a37861548fa6e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PopUpAnimation
+  animType: 3
+  targetScale: {x: 1, y: 1, z: 1}
+  duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1876663070
 GameObject:
   m_ObjectHideFlags: 0
@@ -4444,6 +4504,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1935680567 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5260863261524460766, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -4464,6 +4525,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1944739220
 GameObject:
   m_ObjectHideFlags: 0
@@ -4685,6 +4747,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8234502072037164124, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 778658384}
+    - targetCorrespondingSourceObject: {fileID: 1375608868896104209, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1857286993}
     - targetCorrespondingSourceObject: {fileID: 5624886801111214086, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1986065399}
@@ -4874,6 +4939,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &1998026169 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 528813894656928600, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -4894,6 +4960,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1 &2068824508 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8370036258066155485, guid: afc10d97785f9c648b94a84ed15ffde2, type: 3}
@@ -4994,6 +5061,7 @@ MonoBehaviour:
   animType: 0
   targetScale: {x: 1, y: 1, z: 1}
   duration: 0.5
+  flyOffset: {x: 0, y: 5, z: -5}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

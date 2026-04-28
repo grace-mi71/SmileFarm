@@ -5,9 +5,10 @@ public class PopUpAnimation : MonoBehaviour
 {
     public enum AnimationType
     {
-        Pop,        // 통통 튀어오르기 (기본)
+        Pop,        // 통통 튀어오르기
         SpinGrow,   // 빙그르르 돌며 나타나기
-        Jelly       // 말랑말랑 젤리처럼 나타나기
+        Jelly,      // 말랑말랑 젤리
+        FlyIn       // 저 멀리서 날아오기 (새 전용)
     }
 
     public AnimationType animType = AnimationType.Pop;
@@ -16,31 +17,49 @@ public class PopUpAnimation : MonoBehaviour
 
     [SerializeField] private float duration = 0.5f;
 
+    [Header("FlyIn option")]
+    [SerializeField] private Vector3 flyOffset = new Vector3(0f, 5f, -5f); 
+    private Vector3 originalPosition;
+
+    private void Awake()
+    {
+        originalPosition = transform.localPosition;
+    }
+
     private void OnEnable()
     {
         transform.DOKill();
 
-        // 시작 크기는0으로 
-        transform.localScale = Vector3.zero;
-
-        // 선택한 애니메이션에 맞춰서 재생
         switch (animType)
         {
             case AnimationType.Pop:
-                // 1. 기본 팝업: 통통 튀며 커짐
+                transform.localScale = Vector3.zero;
+                transform.localPosition = originalPosition; // 위치 고정
                 transform.DOScale(targetScale, duration).SetEase(Ease.OutBack);
                 break;
 
             case AnimationType.SpinGrow:
-                // 2. 스핀 팝업: 1바퀴(-360도) 빙글 돌면서 커짐
+                transform.localScale = Vector3.zero;
+                transform.localPosition = originalPosition;
                 transform.localRotation = Quaternion.Euler(0, -360, 0);
                 transform.DOLocalRotate(Vector3.zero, duration, RotateMode.FastBeyond360).SetEase(Ease.OutBack);
                 transform.DOScale(targetScale, duration).SetEase(Ease.OutBack);
                 break;
 
             case AnimationType.Jelly:
-                // 3. 젤리 바운스: 말랑하게 커짐
+                transform.localScale = Vector3.zero;
+                transform.localPosition = originalPosition;
                 transform.DOScale(targetScale, duration + 0.5f).SetEase(Ease.OutElastic);
+                break;
+
+            case AnimationType.FlyIn:
+                // 1. 크기를 0으로 시작
+                transform.localScale = Vector3.zero;
+
+                transform.localPosition = originalPosition + flyOffset;
+
+                transform.DOLocalMove(originalPosition, duration).SetEase(Ease.OutQuad); // 부드럽게 감속하며 날아옴
+                transform.DOScale(targetScale, duration).SetEase(Ease.OutBack); // 도착하면서 살짝 통통 튀는 디테일
                 break;
         }
     }
