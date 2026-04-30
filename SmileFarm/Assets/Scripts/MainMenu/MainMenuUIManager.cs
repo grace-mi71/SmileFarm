@@ -26,7 +26,7 @@ public class MainMenuUIManager : MonoBehaviour
 
     void Start()
     {
-        if (settingsPanel != null) settingsPanel.SetActive(false);
+        settingsPanel.SetActive(false);
 
         ProfileBtn.onClick.AddListener(OnProfileBtnClicked);
         ShopBtn.onClick.AddListener(OnShopBtnClicked);
@@ -78,12 +78,7 @@ public class MainMenuUIManager : MonoBehaviour
     private void OnSettingBtnClicked()
     {
         PlayClickSound();
-
-        if (settingsPanel != null)
-        {
-            bool isActive = settingsPanel.activeSelf;
-            settingsPanel.SetActive(!isActive);
-        }
+        settingsPanel.SetActive(!settingsPanel.activeSelf);
     }
 
     private void OnCloseSettingsBtnClicked()
