@@ -1,10 +1,14 @@
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class PlayerManager : MonoBehaviour
 {
+    // Static instance for global access (Singleton Pattern)
+    public static PlayerManager Instance;
+    
     [Header("Player Stats")]
-    public int PlayerLevel = 0;      // 현재 레벨
+    public int PlayerLevel = 1;      // 현재 레벨
     public float PlayerEXP = 0f;     // 현재 누적 경험치
     public float PlayerMoney = 0f;   // 누적 재화
     public float SmileEXP;           // 웃음으로 얻은 경험치 (누적)
@@ -14,21 +18,35 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private float expScale = 1.25f;    // 레벨업마다 요구량 배율
     [SerializeField] private int maxLevel = 10;
 
-    [Header("Level Objects")]
-    [SerializeField] private GameObject[] levelObjects;         // 레벨별 활성화 오브젝트 (10개)
-
     public event Action<int> LevelChanged;
 
     // 현재 레벨업에 필요한 요구 경험치
     public float RequiredEXP => Mathf.Round(FirstRequiredEXP * Mathf.Pow(expScale, PlayerLevel));
 
-    private void Start()
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            // Start() 대신 씬 로드 이벤트 구독
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         var pendingSmileExp = SmileSessionTransfer.ConsumePendingSmileExperience();
-        if (pendingSmileExp <= 0)
-        {
-            return;
-        }
+        if (pendingSmileExp <= 0) return;
 
         ExpReward(pendingSmileExp);
     }
@@ -53,18 +71,7 @@ public class PlayerManager : MonoBehaviour
         {
             PlayerEXP -= RequiredEXP;
             PlayerLevel++;
-
-            ActiveLevelObject(PlayerLevel);
-
             LevelChanged?.Invoke(PlayerLevel);
         }
-    }
-
-    private void ActiveLevelObject(int level)
-    {
-        int index = level - 1;
-
-        if (levelObjects[index] != null)
-            levelObjects[index].SetActive(true);
     }
 }
