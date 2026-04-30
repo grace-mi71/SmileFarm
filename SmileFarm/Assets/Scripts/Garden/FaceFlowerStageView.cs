@@ -1,3 +1,4 @@
+// Owner: Lee Gangmin
 using UnityEngine;
 
 namespace SmileFarm.Garden
@@ -5,6 +6,7 @@ namespace SmileFarm.Garden
     [DisallowMultipleComponent]
     public sealed class FaceFlowerStageView : MonoBehaviour
     {
+        // Uses the current AR growth stage to decide how many flowers are visible.
         [Header("Dependencies")]
         [SerializeField] private GardenGrowth gardenGrowth;
         [SerializeField] private FaceFlowerAnchor flowerAnchor;
@@ -58,6 +60,7 @@ namespace SmileFarm.Garden
 
             if (!flowerAnchor.HasTrackedFace)
             {
+                // Do not show flowers when the face anchor is not tracked.
                 SetFlowersActive(0);
             }
             else
@@ -77,6 +80,7 @@ namespace SmileFarm.Garden
 
             if (gardenGrowth != null && (flowerAnchor == null || flowerAnchor.HasTrackedFace))
             {
+                // Each growth stage reveals one more flower slot.
                 activeCount = Mathf.Clamp(gardenGrowth.CurrentStageIndex + 1, 0, flowerSlots.Length);
             }
 

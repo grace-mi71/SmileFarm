@@ -1,3 +1,4 @@
+// Owner: Lee Gangmin
 using System;
 using SmileFarm.Garden;
 using SmileFarm.Smile;
@@ -8,10 +9,12 @@ namespace SmileFarm.Core
     [DisallowMultipleComponent]
     public sealed class GameManager : MonoBehaviour
     {
+        // Connects smile detection with the AR session growth system.
         [Header("Dependencies")]
         [SerializeField] private SmileDetection smileDetection;
         [SerializeField] private GardenGrowth gardenGrowth;
 
+        // Defines how long the player must keep smiling to earn one reward tick.
         [Header("Smile Loop")]
         [Min(0.1f)]
         [SerializeField] private float requiredSmileHoldSeconds = 2f;
@@ -55,11 +58,13 @@ namespace SmileFarm.Core
         {
             if (CanAccumulateSmile)
             {
+                // Accumulate smile time only while valid smile input is present.
                 CurrentSmileHoldSeconds += Time.deltaTime;
                 TryRewardExperience();
                 return;
             }
 
+            // Smoothly reset the hold timer when the smile is lost.
             CurrentSmileHoldSeconds = Mathf.MoveTowards(CurrentSmileHoldSeconds, 0f, holdResetSpeed * Time.deltaTime);
         }
 
@@ -83,6 +88,7 @@ namespace SmileFarm.Core
 
             if (gardenGrowth != null)
             {
+                // Push one reward step into the AR growth tracker.
                 gardenGrowth.AddExperience(rewardExperience);
             }
 

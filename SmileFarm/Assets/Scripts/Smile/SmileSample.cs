@@ -1,5 +1,7 @@
+// Owner: Lee Gangmin
 namespace SmileFarm.Smile
 {
+    // Represents a snapshot of the current smile score in a portable form.
     public readonly struct SmileSample
     {
         public SmileSample(float score)
@@ -13,8 +15,8 @@ namespace SmileFarm.Smile
 
         public bool IsSmiling(float threshold)
         {
+            // Evaluates the sample against an arbitrary threshold when needed.
             return Score >= threshold;
         }
     }
 }
-

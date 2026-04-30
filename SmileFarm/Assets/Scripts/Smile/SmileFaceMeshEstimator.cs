@@ -1,3 +1,4 @@
+// Owner: Lee Gangmin
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
 
@@ -5,6 +6,7 @@ namespace SmileFarm.Smile
 {
     public static class SmileFaceMeshEstimator
     {
+        // These indices map facial landmarks used to estimate a smile from the mesh.
         // These indices are an inferred starting point based on the widely used
         // 468-point canonical face mesh topology. They are not guaranteed by
         // ARCore docs, so we treat them as experimental and tune on device.
@@ -43,6 +45,7 @@ namespace SmileFarm.Smile
                 return false;
             }
 
+            // Normalize mouth movement by face width so scores stay scale-independent.
             var mouthWidth = Vector3.Distance(leftMouthCorner, rightMouthCorner) / faceScale;
             var mouthOpen = Vector3.Distance(upperLipCenter, lowerLipCenter) / faceScale;
 
@@ -68,6 +71,7 @@ namespace SmileFarm.Smile
 
         private static float NormalizeWidth(float value)
         {
+            // Maps observed width values into a 0-1 gameplay range.
             return Mathf.InverseLerp(0.32f, 0.48f, value);
         }
 

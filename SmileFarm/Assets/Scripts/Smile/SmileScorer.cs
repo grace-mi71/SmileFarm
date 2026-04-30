@@ -1,9 +1,11 @@
+// Owner: Lee Gangmin
 using UnityEngine;
 
 namespace SmileFarm.Smile
 {
     public static class SmileScorer
     {
+        // Combines facial features into one score that the gameplay loop can use.
         // Start simple: combine a wider smile, raised mouth corners, and a small
         // penalty for an overly open mouth so we can tune this with real device data.
         public static float CalculateScore(
@@ -19,4 +21,3 @@ namespace SmileFarm.Smile
         }
     }
 }
-
