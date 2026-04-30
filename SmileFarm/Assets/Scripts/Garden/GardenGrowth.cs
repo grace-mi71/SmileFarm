@@ -1,3 +1,4 @@
+// Owner: Lee Gangmin
 using System;
 using UnityEngine;
 
@@ -6,6 +7,7 @@ namespace SmileFarm.Garden
     [DisallowMultipleComponent]
     public sealed class GardenGrowth : MonoBehaviour
     {
+        // Defines AR-session progression milestones for flower growth.
         [Header("Progression")]
         [SerializeField] private int[] stageThresholds = { 0, 20, 50, 90 };
 
@@ -28,6 +30,7 @@ namespace SmileFarm.Garden
                 stageThresholds = new[] { 0 };
             }
 
+            // Keep thresholds ordered so stage evaluation stays predictable.
             stageThresholds[0] = 0;
 
             for (var i = 1; i < stageThresholds.Length; i++)
@@ -46,6 +49,7 @@ namespace SmileFarm.Garden
                 return;
             }
 
+            // Track cumulative AR session EXP and notify listeners immediately.
             CurrentExperience += amount;
             ExperienceChanged?.Invoke(CurrentExperience);
 
@@ -72,6 +76,7 @@ namespace SmileFarm.Garden
                 return 0f;
             }
 
+            // Converts overall progress into per-segment UI fill values.
             var scaledProgress = GetOverallProgress01() * totalSegments;
             return Mathf.Clamp01(scaledProgress - segmentIndex);
         }

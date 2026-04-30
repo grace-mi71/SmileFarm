@@ -1,3 +1,4 @@
+// Owner: Lee Gangmin
 using System;
 using UnityEngine;
 using UnityEngine.XR.ARFoundation;
@@ -8,9 +9,11 @@ namespace SmileFarm.Smile
     [DisallowMultipleComponent]
     public sealed class SmileDetection : MonoBehaviour
     {
+        // Pulls AR face data and turns it into a stable smile score each frame.
         [Header("Dependencies")]
         [SerializeField] private ARFaceManager faceManager;
 
+        // Controls how the raw smile score is interpreted and smoothed.
         [Header("Scoring")]
         [Range(0f, 1f)]
         [SerializeField] private float smileThreshold = 0.6f;
@@ -62,10 +65,12 @@ namespace SmileFarm.Smile
 
             if (useDebugScoreInEditor && Application.isEditor)
             {
+                // Allows quick iteration in the editor without a live face input.
                 targetScore = debugScore;
             }
             else if (HasTrackedFace)
             {
+                // Estimate the smile score from the currently tracked face mesh.
                 targetScore = EstimateSmileScoreFromFace();
             }
 
@@ -79,6 +84,7 @@ namespace SmileFarm.Smile
 
         public void SetRawMetrics(float mouthWidthRatio, float mouthOpenRatio, float cornerLiftRatio)
         {
+            // Supports direct metric injection for testing and tuning.
             var score = SmileScorer.CalculateScore(mouthWidthRatio, mouthOpenRatio, cornerLiftRatio);
             UpdateScore(score);
         }
@@ -168,6 +174,7 @@ namespace SmileFarm.Smile
         private void UpdateScore(float targetScore)
         {
             var previousScore = CurrentScore;
+            // Smooth abrupt metric changes so gameplay feels less noisy.
             CurrentScore = Mathf.MoveTowards(CurrentScore, targetScore, smoothingSpeed * Time.deltaTime);
 
             if (!Mathf.Approximately(previousScore, CurrentScore))

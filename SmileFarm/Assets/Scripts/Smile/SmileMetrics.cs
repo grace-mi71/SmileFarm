@@ -1,5 +1,7 @@
+// Owner: Lee Gangmin
 namespace SmileFarm.Smile
 {
+    // Bundles normalized and raw mouth metrics for scoring and debug output.
     public readonly struct SmileMetrics
     {
         public SmileMetrics(
