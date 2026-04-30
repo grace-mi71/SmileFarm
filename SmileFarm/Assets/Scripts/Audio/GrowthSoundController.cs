@@ -1,10 +1,13 @@
+// Owner: Choi Eun-young
+// Description: Controller that plays specific growth and milestone sound effects by observing level changes from the PlayerManager.
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GrowthSoundController : MonoBehaviour
 {
-    // <변경> 쳐다보는 대상을 PlayerManager로 바꿨습니다!
+    // Reference to the PlayerManager to observe level-up events
     [SerializeField] private PlayerManager playerManager;
 
     [Header("Level up Sound")]
@@ -12,25 +15,25 @@ public class GrowthSoundController : MonoBehaviour
 
     [Header("Animation Sound")]
     [SerializeField] private AudioClip flowerGrowSound;
-    [SerializeField] private List<int> flowerStages;
+    [SerializeField] private List<int> flowerStages; // List of levels that trigger the flower growth sound
 
     [SerializeField] private AudioClip treeGrowSound;
-    [SerializeField] private List<int> treeStages;
+    [SerializeField] private List<int> treeStages; // List of levels that trigger the tree growth sound
 
     [SerializeField] private AudioClip furnitureSound;
-    [SerializeField] private List<int> furnitureStages;
+    [SerializeField] private List<int> furnitureStages; // List of levels that trigger the furniture sound
 
     [SerializeField] private AudioClip birdSound;
-    [SerializeField] private List<int> birdStages;
+    [SerializeField] private List<int> birdStages; // List of levels that trigger the bird sound
 
     [Space(10)]
-    [SerializeField] private float soundDelay = 0.5f;
+    [SerializeField] private float soundDelay = 0.5f; // Delay between the level-up sound and the special growth sound
 
     private void Start()
     {
         if (playerManager != null)
         {
-            // <변경> PlayerManager의 레벨업 확성기를 구독합니다.
+            // Subscribe to the LevelChanged event from PlayerManager
             playerManager.LevelChanged += OnLevelChanged;
         }
     }
@@ -39,21 +42,22 @@ public class GrowthSoundController : MonoBehaviour
     {
         if (playerManager != null)
         {
+            // Unsubscribe to prevent memory leaks and null reference errors when the object is destroyed
             playerManager.LevelChanged -= OnLevelChanged;
         }
     }
 
-    // 이제 currentLevel은 농장의 찐 레벨(1~10)이 들어옵니다.
+    // Triggered when the farm level (1-10) changes
     private void OnLevelChanged(int currentLevel)
     {
         if (SoundManager.Instance == null) return;
 
-        // 1. 레벨업 소리 무조건 재생
+        // 1. Always play the standard level-up sound effect
         SoundManager.Instance.PlaySFX(levelUpSound);
 
         AudioClip soundToPlay = null;
 
-        // 2. 지금 농장 레벨이 설정해둔 리스트에 있는지 검사!
+        // 2. Check if the current level matches any specific growth milestones
         if (flowerStages.Contains(currentLevel))
         {
             soundToPlay = flowerGrowSound;
@@ -71,6 +75,7 @@ public class GrowthSoundController : MonoBehaviour
             soundToPlay = birdSound;
         }
 
+        // If a specific milestone is met, play the secondary sound after a delay
         if (soundToPlay != null)
         {
             StartCoroutine(PlaySpecialSoundSequence(soundToPlay));
@@ -79,6 +84,7 @@ public class GrowthSoundController : MonoBehaviour
 
     private IEnumerator PlaySpecialSoundSequence(AudioClip specialSound)
     {
+        // Wait for the specified delay to prevent sounds from overlapping too harshly
         yield return new WaitForSeconds(soundDelay);
         SoundManager.Instance.PlaySFX(specialSound);
     }
