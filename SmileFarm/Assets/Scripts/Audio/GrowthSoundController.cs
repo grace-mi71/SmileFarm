@@ -26,8 +26,9 @@ public class GrowthSoundController : MonoBehaviour
     [SerializeField] private AudioClip birdSound;
     [SerializeField] private List<int> birdStages; // List of levels that trigger the bird sound
 
-    [Space(10)]
-    [SerializeField] private float soundDelay = 0.5f; // Delay between the level-up sound and the special growth sound
+    [Header("Sound Delays")]
+    [SerializeField] private float levelUpDelay = 1.0f; // Delay before playing the standard level-up sound
+    [SerializeField] private float specialSoundDelay = 1.5f; // Additional delay after the level-up sound before playing the special growth sound
 
     private void Start()
     {
@@ -52,7 +53,14 @@ public class GrowthSoundController : MonoBehaviour
     {
         if (SoundManager.Instance == null) return;
 
-        // 1. Always play the standard level-up sound effect
+        // Start the coroutine to play sounds in sequence with delays
+        StartCoroutine(PlaySoundSequence(currentLevel));
+    }
+
+    private IEnumerator PlaySoundSequence(int currentLevel)
+    {
+        // 1. Wait for the specified delay before playing the standard level-up sound
+        yield return new WaitForSeconds(levelUpDelay);
         SoundManager.Instance.PlaySFX(levelUpSound);
 
         AudioClip soundToPlay = null;
@@ -75,17 +83,11 @@ public class GrowthSoundController : MonoBehaviour
             soundToPlay = birdSound;
         }
 
-        // If a specific milestone is met, play the secondary sound after a delay
+        // 3. If a specific milestone is met, play the secondary sound after an additional delay
         if (soundToPlay != null)
         {
-            StartCoroutine(PlaySpecialSoundSequence(soundToPlay));
+            yield return new WaitForSeconds(specialSoundDelay);
+            SoundManager.Instance.PlaySFX(soundToPlay);
         }
-    }
-
-    private IEnumerator PlaySpecialSoundSequence(AudioClip specialSound)
-    {
-        // Wait for the specified delay to prevent sounds from overlapping too harshly
-        yield return new WaitForSeconds(soundDelay);
-        SoundManager.Instance.PlaySFX(specialSound);
     }
 }
