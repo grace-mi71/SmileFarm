@@ -14,32 +14,30 @@ public class ShopColorManager : MonoBehaviour
     public Material whiteMaterial;
 
     // Public methods to be linked to UI Buttons or selection events
-    public void SelectBlueBrush() { currentBrushMaterial = blueMaterial; }
-    public void SelectPinkBrush() { currentBrushMaterial = pinkMaterial; }
-    public void SelectWhiteBrush() { currentBrushMaterial = whiteMaterial; }
+    public void SelectBlueBrush() {PlayClick(); currentBrushMaterial = blueMaterial; ApplyMaterialToAllFlowers();}
+    public void SelectPinkBrush() {PlayClick(); currentBrushMaterial = pinkMaterial; ApplyMaterialToAllFlowers();}
+    public void SelectWhiteBrush() {PlayClick(); currentBrushMaterial = whiteMaterial; ApplyMaterialToAllFlowers();}
 
-    void Update()
+    // Click Sound
+    private void PlayClick()
     {
-        // Executes only if a brush is selected and the left mouse button is clicked
-        if (currentBrushMaterial != null && Input.GetMouseButtonDown(0))
-        {
-            // Shoots a ray from the camera through the mouse position into the 3D world
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
+        if (SoundManager.Instance != null)
+            SoundManager.Instance.PlayButtonClick();
+            
+        // Close Shop Panel
+        MainMenuUIManager.Instance.OnShopBtnClicked();
+    }
 
-            if (Physics.Raycast(ray, out hit))
+    private void ApplyMaterialToAllFlowers()
+    {
+        // Find all tage "Flower"
+        GameObject[] flowers = GameObject.FindGameObjectsWithTag("Flower");
+        foreach (GameObject flower in flowers)
+        {
+            MeshRenderer[] renderers = flower.GetComponentsInChildren<MeshRenderer>();
+            foreach (MeshRenderer render in renderers)
             {
-                // Checks if the hit object is designated as a "Flower"
-                if (hit.collider.CompareTag("Flower"))
-                {
-                    // Retrieves all MeshRenderers in the object and its children to ensure the whole model changes color
-                    MeshRenderer[] renderers = hit.collider.GetComponentsInChildren<MeshRenderer>();
-                    foreach (MeshRenderer r in renderers)
-                    {
-                        // Swaps the existing material with the selected brush material
-                        r.material = currentBrushMaterial;
-                    }
-                }
+                render.material = currentBrushMaterial;
             }
         }
     }

@@ -4,6 +4,8 @@ using UnityEngine.SceneManagement;
 
 public class MainMenuUIManager : MonoBehaviour
 {
+    public static MainMenuUIManager Instance;
+
     [SerializeField] private Button ProfileBtn;
     [SerializeField] private Button ShopBtn;
     [SerializeField] private Button ARBtn;
@@ -16,18 +18,35 @@ public class MainMenuUIManager : MonoBehaviour
     // Profile UI
     [SerializeField] private GameObject profilePanel;
 
+    // Shop UI
+    [SerializeField] private GameObject shopPanel;
+
     // Settings UI
     [SerializeField] private GameObject settingsPanel;
 
-    private bool isProfileOpen = false;  //
-    private bool isShopOpen = false;    //
+    [SerializeField] private Button[] buttons;
+    private Button selectedButton;
 
-    //private bool isUIOpen = false;      //UI 열림 여부
+    // Can't open UI when other UI is opening;
+    private GameObject currentOpenPanel = null;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
         settingsPanel.SetActive(false);
         profilePanel.SetActive(false);
+        shopPanel.SetActive(false);
 
         ProfileBtn.onClick.AddListener(OnProfileBtnClicked);
         ShopBtn.onClick.AddListener(OnShopBtnClicked);
@@ -45,16 +64,13 @@ public class MainMenuUIManager : MonoBehaviour
     private void OnProfileBtnClicked()
     {
         PlayClickSound();
-        profilePanel.SetActive(!profilePanel.activeSelf);
+        OpenPanel(profilePanel);
     }
 
-    private void OnShopBtnClicked()
+    public void OnShopBtnClicked()
     {
         PlayClickSound();
-        if (isShopOpen = !isShopOpen)
-        {
-
-        }
+        OpenPanel(shopPanel);
     }
 
     private void OnARBtnClicked()
@@ -66,7 +82,7 @@ public class MainMenuUIManager : MonoBehaviour
     private void OnSettingBtnClicked()
     {
         PlayClickSound();
-        settingsPanel.SetActive(!settingsPanel.activeSelf);
+        OpenPanel(settingsPanel);
     }
 
     private void OnGiveExpBtnClicked()
@@ -83,5 +99,22 @@ public class MainMenuUIManager : MonoBehaviour
         SceneManager.LoadScene(SceneNumber);
     }
 
-    
+    private void OpenPanel(GameObject panel)
+    {
+        // 같은 패널 누르면 닫기
+        if (currentOpenPanel == panel)
+        {
+            panel.SetActive(false);
+            currentOpenPanel = null;
+            return;
+        }
+
+        // 다른 패널이 열려있으면 먼저 닫기
+        if (currentOpenPanel != null)
+            currentOpenPanel.SetActive(false);
+
+        // 새 패널 열기
+        panel.SetActive(true);
+        currentOpenPanel = panel;
+    }
 }
