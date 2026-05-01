@@ -23,9 +23,7 @@ namespace SmileFarm.UI
         [SerializeField] private float lineSpacing = 28f;
 
         [Header("Growth Gauge")]
-        [SerializeField] private Image[] gaugeSegments = new Image[4];
-        [SerializeField] private Color emptyGaugeColor = new(0.15f, 0.15f, 0.15f, 0.85f);
-        [SerializeField] private Color filledGaugeColor = new(0.2f, 0.85f, 0.35f, 1f);
+        [SerializeField] private Slider growthSlider;
 
         [Header("Scene Transition")]
         [SerializeField] private bool autoLoadMainSceneOnComplete = true;
@@ -109,12 +107,13 @@ namespace SmileFarm.UI
             }
 
             remainingSessionSeconds = Mathf.Max(0f, remainingSessionSeconds - Time.deltaTime);
-            if (remainingSessionSeconds > 0f)
-            {
-                return;
-            }
+            RefreshGauge();
 
-            BeginCompleteSceneTransition();
+            if (remainingSessionSeconds <= 0f)
+            {
+                if (growthSlider != null) growthSlider.value = 1f;
+                BeginCompleteSceneTransition();
+            }
         }
 
         private void OnGUI()
@@ -175,13 +174,13 @@ namespace SmileFarm.UI
         private void HandleExperienceChanged(int _)
         {
             RefreshGauge();
-            TryLoadCompleteScene();
+            //TryLoadCompleteScene();
         }
 
         private void HandleStageChanged(int _)
         {
             RefreshGauge();
-            TryLoadCompleteScene();
+            //TryLoadCompleteScene();
         }
 
         private void EnsureStyle()
@@ -205,25 +204,10 @@ namespace SmileFarm.UI
 
         private void RefreshGauge()
         {
-            if (gardenGrowth == null)
-            {
-                return;
-            }
+            if (growthSlider == null) return;
 
-            for (var i = 0; i < gaugeSegments.Length; i++)
-            {
-                var segment = gaugeSegments[i];
-                if (segment == null)
-                {
-                    continue;
-                }
-
-                segment.type = Image.Type.Filled;
-                segment.fillMethod = Image.FillMethod.Horizontal;
-                segment.fillOrigin = (int)Image.OriginHorizontal.Left;
-                segment.fillAmount = gardenGrowth.GetSegmentFillAmount(i, gaugeSegments.Length);
-                segment.color = Color.Lerp(emptyGaugeColor, filledGaugeColor, segment.fillAmount);
-            }
+            float elapsed = sessionDurationSeconds - remainingSessionSeconds;
+            growthSlider.value = Mathf.Clamp01(elapsed / sessionDurationSeconds);
         }
 
         private void TryLoadCompleteScene()

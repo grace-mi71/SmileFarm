@@ -10,7 +10,6 @@ public class MainMenuUIManager : MonoBehaviour
     [SerializeField] private Button ShopBtn;
     [SerializeField] private Button ARBtn;
     [SerializeField] private Button SettingBtn;
-    [SerializeField] private Button GiveExpBtn;
 
     // 게임 테스트용
     [SerializeField] private PlayerManager playerManager;
@@ -23,9 +22,6 @@ public class MainMenuUIManager : MonoBehaviour
 
     // Settings UI
     [SerializeField] private GameObject settingsPanel;
-
-    [SerializeField] private Button[] buttons;
-    private Button selectedButton;
 
     // Can't open UI when other UI is opening;
     private GameObject currentOpenPanel = null;
@@ -52,7 +48,6 @@ public class MainMenuUIManager : MonoBehaviour
         ShopBtn.onClick.AddListener(OnShopBtnClicked);
         ARBtn.onClick.AddListener(OnARBtnClicked);
         SettingBtn.onClick.AddListener(OnSettingBtnClicked);
-        GiveExpBtn.onClick.AddListener(OnGiveExpBtnClicked);
     }
 
     private void PlayClickSound()
@@ -76,7 +71,8 @@ public class MainMenuUIManager : MonoBehaviour
     private void OnARBtnClicked()
     {
         PlayClickSound();
-        LoadScene(2);
+        SceneLoader.nextScene = "ARScene";
+        SceneManager.LoadScene("LoadingScene");
     }
 
     private void OnSettingBtnClicked()

@@ -17,7 +17,8 @@ public class TitleUIManager : MonoBehaviour
     {
         if (SoundManager.Instance != null) SoundManager.Instance.PlayButtonClick();
 
-        LoadScene(1);
+        SceneLoader.nextScene = "MainMenu";
+        SceneManager.LoadScene("LoadingScene");
     }
 
     private void OnExitClicked()
@@ -25,10 +26,5 @@ public class TitleUIManager : MonoBehaviour
         if (SoundManager.Instance != null) SoundManager.Instance.PlayButtonClick();
 
         Application.Quit();
-    }
-
-    public void LoadScene(int SceneNumber)
-    {
-        SceneManager.LoadScene(SceneNumber);
     }
 }
