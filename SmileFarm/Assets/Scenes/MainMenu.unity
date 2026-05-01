@@ -5931,7 +5931,6 @@ MonoBehaviour:
   ShopBtn: {fileID: 222780737}
   ARBtn: {fileID: 1418280934}
   SettingBtn: {fileID: 1163242313}
-  GiveExpBtn: {fileID: 0}
   playerManager: {fileID: 807504246}
   profilePanel: {fileID: 1944739220}
   shopPanel: {fileID: 541254789}
