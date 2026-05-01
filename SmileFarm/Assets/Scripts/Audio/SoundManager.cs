@@ -19,6 +19,9 @@ public class SoundManager : MonoBehaviour
     // Default clip for UI interaction sounds
     public AudioClip defaultClickSound;
 
+    // Default volume value
+    private const float drfaultVolume = 0.5f;
+
     private void Awake()
     {
         // Implementation of the Singleton pattern to ensure only one SoundManager exists
@@ -59,15 +62,21 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    // Save volume value and call value other script
+    public float GetBGMVolume() => PlayerPrefs.GetFloat("BGMVolume", drfaultVolume);
+    public float GetSFXVolume() => PlayerPrefs.GetFloat("SFXVolume", drfaultVolume);
+
     public void SetBGMVolume(float volume)
-    {
+    {   
         // Converts linear slider value (0 to 1) to logarithmic decibels (dB) for the AudioMixer
         audioMixer.SetFloat("BGMVolume", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("BGMVolume", volume);
     }
 
     public void SetSFXVolume(float volume)
     {
         // Converts linear slider value (0 to 1) to logarithmic decibels (dB) for the AudioMixer
         audioMixer.SetFloat("SFXVolume", Mathf.Log10(volume) * 20);
+        PlayerPrefs.SetFloat("SFXVolume", volume);
     }
 }

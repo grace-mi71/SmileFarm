@@ -13,11 +13,11 @@ public class MainMenuUIManager : MonoBehaviour
     // 게임 테스트용
     [SerializeField] private PlayerManager playerManager;
 
+    // Profile UI
+    [SerializeField] private GameObject profilePanel;
+
     // Settings UI
     [SerializeField] private GameObject settingsPanel;
-    [SerializeField] private Button closeSettingsBtn;
-    [SerializeField] private Slider bgmSlider;
-    [SerializeField] private Slider sfxSlider;
 
     private bool isProfileOpen = false;  //
     private bool isShopOpen = false;    //
@@ -27,22 +27,13 @@ public class MainMenuUIManager : MonoBehaviour
     void Start()
     {
         settingsPanel.SetActive(false);
+        profilePanel.SetActive(false);
 
         ProfileBtn.onClick.AddListener(OnProfileBtnClicked);
         ShopBtn.onClick.AddListener(OnShopBtnClicked);
         ARBtn.onClick.AddListener(OnARBtnClicked);
         SettingBtn.onClick.AddListener(OnSettingBtnClicked);
         GiveExpBtn.onClick.AddListener(OnGiveExpBtnClicked);
-
-        // Settings UI Event Listeners
-        if (closeSettingsBtn != null)
-            closeSettingsBtn.onClick.AddListener(OnCloseSettingsBtnClicked);
-
-        if (bgmSlider != null && SoundManager.Instance != null)
-            bgmSlider.onValueChanged.AddListener(SoundManager.Instance.SetBGMVolume);
-
-        if (sfxSlider != null && SoundManager.Instance != null)
-            sfxSlider.onValueChanged.AddListener(SoundManager.Instance.SetSFXVolume);
     }
 
     private void PlayClickSound()
@@ -54,10 +45,7 @@ public class MainMenuUIManager : MonoBehaviour
     private void OnProfileBtnClicked()
     {
         PlayClickSound();
-        if (isProfileOpen = !isProfileOpen)
-        {
-
-        }
+        profilePanel.SetActive(!profilePanel.activeSelf);
     }
 
     private void OnShopBtnClicked()
@@ -79,13 +67,6 @@ public class MainMenuUIManager : MonoBehaviour
     {
         PlayClickSound();
         settingsPanel.SetActive(!settingsPanel.activeSelf);
-    }
-
-    private void OnCloseSettingsBtnClicked()
-    {
-        PlayClickSound();
-        if (settingsPanel != null)
-            settingsPanel.SetActive(false);
     }
 
     private void OnGiveExpBtnClicked()
