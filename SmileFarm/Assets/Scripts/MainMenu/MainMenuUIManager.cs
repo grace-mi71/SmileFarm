@@ -1,31 +1,28 @@
+// Owner: Lee Haejun
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
+// Manages the Main Menu UI, handling panel navigation and button interactions (Singleton)
 public class MainMenuUIManager : MonoBehaviour
 {
     public static MainMenuUIManager Instance;
 
-    [SerializeField] private Button ProfileBtn;
-    [SerializeField] private Button ShopBtn;
-    [SerializeField] private Button ARBtn;
-    [SerializeField] private Button SettingBtn;
+    [SerializeField] private Button ProfileBtn;  // Button to open the profile panel
+    [SerializeField] private Button ShopBtn;     // Button to open the shop panel
+    [SerializeField] private Button ARBtn;       // Button to navigate to the AR scene
+    [SerializeField] private Button SettingBtn;  // Button to open the settings panel
 
-    // 게임 테스트용
-    [SerializeField] private PlayerManager playerManager;
+    [SerializeField] private PlayerManager playerManager; // Reference used for testing EXP rewards
 
-    // Profile UI
-    [SerializeField] private GameObject profilePanel;
+    // UI Panels
+    [SerializeField] private GameObject profilePanel;  // Profile settings panel
+    [SerializeField] private GameObject shopPanel;     // Shop panel
+    [SerializeField] private GameObject settingsPanel; // Settings panel
 
-    // Shop UI
-    [SerializeField] private GameObject shopPanel;
+    private GameObject currentOpenPanel = null; // Tracks the currently open panel to prevent multiple panels opening simultaneously
 
-    // Settings UI
-    [SerializeField] private GameObject settingsPanel;
-
-    // Can't open UI when other UI is opening;
-    private GameObject currentOpenPanel = null;
-
+    // Enforce Singleton pattern
     private void Awake()
     {
         if (Instance == null)
@@ -40,34 +37,40 @@ public class MainMenuUIManager : MonoBehaviour
 
     void Start()
     {
+        // Ensure all panels are closed on startup
         settingsPanel.SetActive(false);
         profilePanel.SetActive(false);
         shopPanel.SetActive(false);
 
+        // Register click event listeners for each button
         ProfileBtn.onClick.AddListener(OnProfileBtnClicked);
         ShopBtn.onClick.AddListener(OnShopBtnClicked);
         ARBtn.onClick.AddListener(OnARBtnClicked);
         SettingBtn.onClick.AddListener(OnSettingBtnClicked);
     }
 
+    // Plays button click sound if SoundManager is available
     private void PlayClickSound()
     {
         if (SoundManager.Instance != null)
             SoundManager.Instance.PlayButtonClick();
     }
 
+    // Opens the profile panel
     private void OnProfileBtnClicked()
     {
         PlayClickSound();
         OpenPanel(profilePanel);
     }
 
+    // Opens the shop panel
     public void OnShopBtnClicked()
     {
         PlayClickSound();
         OpenPanel(shopPanel);
     }
 
+    // Navigates to the AR scene via the loading screen
     private void OnARBtnClicked()
     {
         PlayClickSound();
@@ -75,29 +78,31 @@ public class MainMenuUIManager : MonoBehaviour
         SceneManager.LoadScene("LoadingScene");
     }
 
+    // Opens the settings panel
     private void OnSettingBtnClicked()
     {
         PlayClickSound();
         OpenPanel(settingsPanel);
     }
 
+    // Grants test EXP to the player (for development/testing purposes only)
     private void OnGiveExpBtnClicked()
     {
         PlayClickSound();
-
-        // 테스트용 경험치 지급 (원하는 값으로 조정)
         if (playerManager != null)
             playerManager.ExpReward(20);
     }
 
+    // Loads a scene by build index
     public void LoadScene(int SceneNumber)
     {
         SceneManager.LoadScene(SceneNumber);
     }
 
+    // Toggles the given panel open or closed, closing any other open panel first
     private void OpenPanel(GameObject panel)
     {
-        // 같은 패널 누르면 닫기
+        // If the same panel is clicked again, close it
         if (currentOpenPanel == panel)
         {
             panel.SetActive(false);
@@ -105,11 +110,11 @@ public class MainMenuUIManager : MonoBehaviour
             return;
         }
 
-        // 다른 패널이 열려있으면 먼저 닫기
+        // Close the currently open panel before opening a new one
         if (currentOpenPanel != null)
             currentOpenPanel.SetActive(false);
 
-        // 새 패널 열기
+        // Open the new panel and track it as the current open panel
         panel.SetActive(true);
         currentOpenPanel = panel;
     }

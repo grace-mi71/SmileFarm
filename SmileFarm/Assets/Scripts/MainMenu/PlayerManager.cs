@@ -1,26 +1,29 @@
+// Owner: Lee Haejun
 using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 
+// Manages player stats, experience, leveling, and persists across scenes (Singleton)
 public class PlayerManager : MonoBehaviour
 {
     // Static instance for global access (Singleton Pattern)
     public static PlayerManager Instance;
-    
+
     [Header("Player Stats")]
-    public int PlayerLevel = 1;      // 현재 레벨
-    public float PlayerEXP = 0f;     // 현재 누적 경험치
-    public float PlayerMoney = 0f;   // 누적 재화
-    public float SmileEXP;           // 웃음으로 얻은 경험치 (누적)
+    public int PlayerLevel = 1;      // Current player level
+    public float PlayerEXP = 0f;     // Total accumulated experience points
+    public float PlayerMoney = 0f;   // Total accumulated currency
+    public float SmileEXP;           // Total experience gained specifically from smiling
 
     [Header("Level Settings")]
-    [SerializeField] private float FirstRequiredEXP = 50f;      // 레벨 1 요구 경험치
-    [SerializeField] private float expScale = 1.25f;    // 레벨업마다 요구량 배율
-    [SerializeField] private int maxLevel = 10;
+    [SerializeField] private float FirstRequiredEXP = 50f;  // EXP required to level up from level 1
+    [SerializeField] private float expScale = 1.25f;        // Multiplier applied to EXP requirement per level
+    [SerializeField] private int maxLevel = 10;             // Maximum level the player can reach
 
+    // Event fired when the player levels up, passing the new level as an argument
     public event Action<int> LevelChanged;
 
-    // 현재 레벨업에 필요한 요구 경험치
+    // Calculates the EXP required to reach the next level based on current level
     public float RequiredEXP => Mathf.Round(FirstRequiredEXP * Mathf.Pow(expScale, PlayerLevel));
 
     private void Awake()
@@ -28,50 +31,46 @@ public class PlayerManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
-            // Start() 대신 씬 로드 이벤트 구독
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            DontDestroyOnLoad(gameObject); // Persist this object across scene loads
+            SceneManager.sceneLoaded += OnSceneLoaded; // Subscribe to scene load event instead of using Start()
         }
         else
         {
-            Destroy(gameObject);
+            Destroy(gameObject); // Destroy duplicate instances to enforce Singleton
         }
     }
 
+    // Unsubscribe from scene load event to prevent memory leaks
     private void OnDestroy()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    // Called each time a new scene is loaded - applies any pending smile EXP from the previous session
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         var pendingSmileExp = SmileSessionTransfer.ConsumePendingSmileExperience();
         if (pendingSmileExp <= 0) return;
-
         ExpReward(pendingSmileExp);
     }
 
+    // Rewards the player with EXP and money, then checks for level up
     public void ExpReward(int amount)
     {
-        // SmileEXP 누적
-        SmileEXP += amount;
-
-        // PlayerEXP, PlayerMoney 동시 누적
-        PlayerEXP += amount;
-        PlayerMoney += amount;
-
-        // 레벨업 체크
-        LevelUp();
+        SmileEXP += amount;    // Accumulate smile-specific EXP
+        PlayerEXP += amount;   // Accumulate total EXP
+        PlayerMoney += amount; // Accumulate currency equal to EXP gained
+        LevelUp();             // Check and process level up if threshold is reached
     }
 
+    // Handles level up logic, supporting multiple level ups in a single reward
     private void LevelUp()
     {
-        // 최대 레벨 도달 시 중단
         while (PlayerLevel < maxLevel && PlayerEXP >= RequiredEXP)
         {
-            PlayerEXP -= RequiredEXP;
-            PlayerLevel++;
-            LevelChanged?.Invoke(PlayerLevel);
+            PlayerEXP -= RequiredEXP; // Deduct required EXP for the current level
+            PlayerLevel++;            // Increment player level
+            LevelChanged?.Invoke(PlayerLevel); // Notify listeners of the new level
         }
     }
 }

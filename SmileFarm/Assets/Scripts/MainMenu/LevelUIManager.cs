@@ -1,44 +1,49 @@
+// Owner: Lee Haejun
 using UnityEngine;
 using UnityEngine.UI;
 
+// Manages the level-related UI elements, including the EXP slider and level image
 public class LevelUIManager : MonoBehaviour
 {
     [Header("UI References")]
-    public Slider expSlider;
-    public Image levelImage;
+    public Slider expSlider;   // Slider displaying current EXP progress toward the next level
+    public Image levelImage;   // Image displaying the icon corresponding to the current level
 
-    [Header("Level Images (인덱스 0 = 레벨 1)")]
-    public Sprite[] levelSprites; // Inspector에서 레벨 순서대로 할당
+    [Header("Level Images (Index 0 = Level 1)")]
+    public Sprite[] levelSprites; // Sprites assigned in order of level in the Inspector
 
     private void Start()
     {
-        // 이벤트 구독 - 레벨업 시 자동 호출
+        // Subscribe to level change event to automatically update UI on level up
         PlayerManager.Instance.LevelChanged += OnLevelChanged;
 
-        // 초기 UI 세팅
+        // Initialize UI with the current player state on scene load
         UpdateUI();
     }
 
+    // Unsubscribe from the level change event on destroy to prevent memory leaks
     private void OnDestroy()
     {
         if (PlayerManager.Instance != null)
             PlayerManager.Instance.LevelChanged -= OnLevelChanged;
     }
 
+    // Called when the player levels up - refreshes the UI with the new level data
     private void OnLevelChanged(int newLevel)
     {
         UpdateUI();
     }
 
+    // Updates the EXP slider and level image to reflect the current player state
     private void UpdateUI()
     {
         var pm = PlayerManager.Instance;
 
-        // Slider: 현재 레벨 내 진행도
+        // Update slider to show EXP progress within the current level
         expSlider.maxValue = pm.RequiredEXP;
         expSlider.value = pm.PlayerEXP;
 
-        // Image: 현재 레벨에 맞는 이미지 (레벨 1 = 인덱스 0)
+        // Update level image using level as index (Level 1 = Index 0)
         int index = pm.PlayerLevel - 1;
         if (levelSprites != null && index < levelSprites.Length)
             levelImage.sprite = levelSprites[index];
